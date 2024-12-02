@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer to Customer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .cart-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .cart-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        .product-section {
+            margin-bottom: 40px;
+        }
+
+        .product-section h2 {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .product-section img {
+            display: block;
+            margin: 0 auto;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product img {
+            width: 150px;
+            height: auto;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .product-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .product-info p {
+            margin-bottom: 10px;
+        }
+
+        .product-info input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .product-list {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar-content {
+            padding: 20px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-items-container {
+            margin-bottom: 20px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-items h3 {
+            margin-bottom: 10px;
+        }
+
+        .cart-items p {
+            margin: 5px 0;
+        }
+
+        .total-amount {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background-color: #45a049;
+        }
+
+        .payment-page {
+            display: none;
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-page h2 {
+            text-align: center;
+        }
+
+        .payment-page label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .payment-page input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .payment-methods {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Farmer to Customer Shopping Page</h1>
+        <div class="cart-icon" onclick="openSidebar()">
+            <img src="https://cdn-icons-png.flaticon.com/512/34/34568.png" alt="Cart Icon">
+        </div>
+    </header>
+
+    <main>
+        <!-- Fruits Section -->
+        <section id="fruits" class="product-section" onclick="toggleProducts('fruits-list')">
+            <h2>Fruits</h2>
+            <img src="https://www.healthyeating.org/images/default-source/home-0.0/nutrition-topics-2.0/general-nutrition-wellness/2-2-2-3foodgroups_fruits_detailfeature.jpg?sfvrsn=64942d53_4" alt="Fruits Cover">
+            <div id="fruits-list" class="product-list">
+                <!-- Apples -->
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtkzZMTh_n9DE3CznuCnA8wVdQI7IQT9sDng&s" alt="Apples">
+                    <div class="product-info">
+                        <h3>Apples</h3>
+                        <p>Price: ₹150 per kg</p>
+                        <label for="apple-quantity">Quantity (kg):</label>
+                        <input type="number" id="apple-quantity" min="1" value="1">
+                        <button onclick="addToCart('Apples', 150, 'apple-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Oranges -->
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnE6guE4VRiTv4HRn7imLup4N6GA0Et6Cnig&s" alt="Oranges">
+                    <div class="product-info">
+                        <h3>Oranges</h3>
+                        <p>Price: ₹50 per dozen</p>
+                        <label for="oranges-quantity">Quantity (dozen):</label>
+                        <input type="number" id="oranges-quantity" min="1" value="1">
+                        <button onclick="addToCart('Oranges', 50, 'oranges-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                
+                 <!-- Banana -->
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/51ebZJ+DR4L.jpg" alt="Banana">
+                    <div class="product-info">
+                        <h3>Banana</h3>
+                        <p>Price: ₹120 per kg</p>
+                        <label for="Banana-quantity">Quantity (dozen):</label>
+                        <input type="number" id="Banana-quantity" min="1" value="1">
+                        <button onclick="addToCart('Banana', 120, 'Banana-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Grapes -->
+                <div class="product">
+                    <img src="https://images.pexels.com/photos/60021/grapes-wine-fruit-vines-60021.jpeg?cs=srgb&dl=pexels-pixabay-60021.jpg&fm=jpg" alt="Grapes">
+                    <div class="product-info">
+                        <h3>Fresh Grapes</h3>
+                        <p>Price: ₹90 per kg</p>
+                        <label for="grapes-quantity">Quantity (kg):</label>
+                        <input type="number" id="grapes-quantity" min="1" value="1">
+                        <button onclick="addToCart('Fresh Grapes', 90, 'grapes-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+    
+            </div>
+        </section>
+<!-- Vegetables Section -->
+        <section id="vegetables" class="product-section" onclick="toggleProducts('vegetables-list')">
+            <h2>Vegetables</h2>
+            <img src="https://cdn.britannica.com/17/196817-050-6A15DAC3/vegetables.jpg" alt="Vegetables Cover">
+            <div id="vegetables-list" class="product-list">
+                <!-- Onions -->
+                <div class="product">
+                    <img src="https://www.ampimex.in/wp-content/uploads/2021/02/onion.jpg" alt="Onions">
+                    <div class="product-info">
+                        <h3>Onions</h3>
+                        <p>Price: ₹40 per kg</p>
+                        <label for="onion-quantity">Quantity (kg):</label>
+                        <input type="number" id="onion-quantity" min="1" value="1">
+                        <button onclick="addToCart('Onions', 40, 'onion-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Tomatoes -->
+                <div class="product">
+                    <img src="https://m.economictimes.com/thumb/msid-95423731,width-1200,height-900,resizemode-4,imgsize-56196/tomatoes-canva.jpg" alt="Tomatoes">
+                    <div class="product-info">
+                        <h3>Tomatoes</h3>
+                        <p>Price: ₹60 per kg</p>
+                        <label for="tomato-quantity">Quantity (kg):</label>
+                        <input type="number" id="tomato-quantity" min="1" value="1">
+                        <button onclick="addToCart('Tomatoes', 60, 'tomato-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                
+                 <!-- Potatoes -->
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/313dtY-LOEL.jpg" alt="Potatoes">
+                    <div class="product-info">
+                        <h3>Potatoes</h3>
+                        <p>Price: ₹30 per kg</p>
+                        <label for="potato-quantity">Quantity (kg):</label>
+                        <input type="number" id="potato-quantity" min="1" value="1">
+                        <button onclick="addToCart('Potatoes', 30, 'potato-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Carrots -->
+                <div class="product">
+                    <img src="https://seed2plant.in/cdn/shop/products/carrotseeds.jpg?v=1604032858&width=1500" alt="Carrots">
+                    <div class="product-info">
+                        <h3>Carrots</h3>
+                        <p>Price: ₹45 per kg</p>
+                        <label for="carrot-quantity">Quantity (kg):</label>
+                        <input type="number" id="carrot-quantity" min="1" value="1">
+                        <button onclick="addToCart(' Carrots', 45, 'carrot-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                
+                 <!-- Lady Finger-->
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXFrwMa3merBWVytBghtcvfdm1vkzxDi2VkQ&s" alt="Lady Finger">
+                    <div class="product-info">
+                        <h3>Lady Finger</h3>
+                        <p>Price: ₹70 per kg</p>
+                        <label for="Lady Finger-quantity">Quantity (kg):</label>
+                        <input type="number" id="Lady Finger-quantity" min="1" value="1">
+                        <button onclick="addToCart('Lady Finger', 70, 'Lady Finger-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+  <!-- Dairy Section -->
+        <section id="dairy" class="product-section" onclick="toggleProducts('dairy-list')">
+            <h2>Dairy</h2>
+            <img src="https://domf5oio6qrcr.cloudfront.net/medialibrary/9685/iStock-544807136.jpg" alt="Dairy Cover">
+            <div id="dairy-list" class="product-list">
+                <!-- Milk -->
+                <div class="product">
+                    <img src="https://static.toiimg.com/photo/108036977.cms" alt="Milk">
+                    <div class="product-info">
+                        <h3>Fresh Milk</h3>
+                        <p>Price: ₹50 per litre</p>
+                        <label for="milk-quantity">Quantity (litres):</label>
+                        <input type="number" id="milk-quantity" min="1" value="1">
+                        <button onclick="addToCart('Fresh Milk', 50, 'milk-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Ghee -->
+                <div class="product">
+                    <img src="https://images.healthshots.com/healthshots/en/uploads/2021/11/03180439/which-ghee-is-better-1600x900.jpg" alt="Ghee">
+                    <div class="product-info">
+                        <h3>Pure Ghee</h3>
+                        <p>Price: ₹500 per kg</p>
+                        <label for="ghee-quantity">Quantity (kg):</label>
+                        <input type="number" id="ghee-quantity" min="1" value="1">
+                        <button onclick="addToCart('Pure Ghee', 500, 'ghee-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Butter -->
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQppZ6lQjrm_G4X48UpdL9dw6n_AcZhyUzuSg&s" alt="Butter">
+                    <div class="product-info">
+                        <h3>Fresh Butter</h3>
+                        <p>Price: ₹300 per kg</p>
+                        <label for="butter-quantity">Quantity (kg):</label>
+                        <input type="number" id="butter-quantity" min="1" value="1">
+                        <button onclick="addToCart('Fresh Butter', 300, 'butter-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Paneer -->
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE0FvAhZ2WHLHm2ct5sSG4qWz3zDnFZb68Dg&s" alt="Paneer">
+                    <div class="product-info">
+                        <h3>Fresh Paneer</h3>
+                        <p>Price: ₹400 per kg</p>
+                        <label for="paneer-quantity">Quantity (kg):</label>
+                        <input type="number" id="paneer-quantity" min="1" value="1">
+                        <button onclick="addToCart('Fresh Paneer', 400, 'paneer-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+                 <!-- Curd -->
+                <div class="product">
+                    <img src="https://tiimg.tistatic.com/fp/1/007/502/100-fresh-pure-creamy-white-curd-250gm-500gm-1kg-pack-705.jpg" alt="Curd">
+                    <div class="product-info">
+                        <h3>Fresh Curd</h3>
+                        <p>Price: ₹60 per kg</p>
+                        <label for="curd-quantity">Quantity (kg):</label>
+                        <input type="number" id="curd-quantity" min="1" value="1">
+                        <button onclick="addToCart('Fresh Curd', 60, 'curd-quantity')">Add to Cart</button>
+                    </div>
+                </div>
+
+</main>
+
+       
+
+    <!-- Sidebar -->
+    <div id="cartSidebar" class="sidebar">
+        <span class="close-btn" onclick="closeSidebar()">&times;</span>
+        <div class="sidebar-content">
+            <h2>Shopping Cart</h2>
+            <div class="cart-items-container"></div>
+            <div class="total-amount">Total: ₹0</div>
+            <button class="checkout-btn" onclick="showPaymentPage()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div id="paymentPage" class="payment-page">
+        <h2>Payment Details</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" required>
+
+        <div class="payment-methods">
+            <label>Payment Method:</label>
+            <label><input type="radio" name="payment-method" value="Card" checked> Card</label>
+            <label><input type="radio" name="payment-method" value="Cash"> Cash</label>
+        </div>
+
+        <div id="card-details">
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" required>
+
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" required>
+
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" required>
+        </div>
+
+        <button class="submit-btn" onclick="processPayment()">Pay Now</button>
+    </div>
+
+    <script>
+        let cart = [];
+        let totalAmount = 0;
+
+        // Function to open the sidebar
+        function openSidebar() {
+            document.getElementById('cartSidebar').style.width = '300px';
+        }
+
+        // Function to close the sidebar
+        function closeSidebar() {
+            document.getElementById('cartSidebar').style.width = '0';
+        }
+
+        // Function to toggle the product list visibility
+        function toggleProducts(listId) {
+            const productList = document.getElementById(listId);
+            if (productList.style.display === 'none') {
+                productList.style.display = 'block';
+            } else {
+                productList.style.display = 'none';
+            }
+        }
+
+        // Function to add products to the cart
+        function addToCart(productName, price, quantityInputId) {
+            const quantity = document.getElementById(quantityInputId).value;
+            const totalPrice = price * quantity;
+
+            cart.push({ productName, price, quantity });
+            totalAmount += totalPrice;
+
+            updateCart();
+            alert(`${quantity} ${productName} added to cart!`);
+        }
+
+        // Function to update cart UI
+        function updateCart() {
+            const cartItemsContainer = document.querySelector('.cart-items-container');
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-items');
+                itemElement.innerHTML = `<p>${item.quantity} x ${item.productName} - ₹${item.price * item.quantity}</p>`;
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            document.querySelector('.total-amount').innerText = `Total: ₹${totalAmount}`;
+        }
+
+        // Function to show payment page
+        function showPaymentPage() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            document.getElementById('cartSidebar').style.width = '0'; // Close the cart sidebar
+            document.getElementById('paymentPage').style.display = 'block'; // Show payment page
+        }
+
+        // Function to process payment
+        function processPayment() {
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            const cardNumber = document.getElementById('card-number').value;
+            const expiryDate = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+
+            // Validation for card payment
+            if (paymentMethod === "Card") {
+                if (!cardNumber || !expiryDate || !cvv) {
+                    alert("Please fill in all card details.");
+                    return;
+                }
+            }
+
+            alert(`Payment Successful!\nName: ${name}\nAddress: ${address}\nPayment Method: ${paymentMethod}`);
+            
+            // Reset the payment form and cart after successful payment
+            document.getElementById('paymentPage').style.display = 'none'; // Hide payment page
+            document.querySelector('.cart-items-container').innerHTML = ''; // Clear cart items
+            document.querySelector('.total-amount').innerText = 'Total: ₹0'; // Reset total amount
+            document.getElementById('name').value = ''; // Clear name field
+            document.getElementById('address').value = ''; // Clear address field
+            document.getElementById('card-number').value = ''; // Clear card number field
+            document.getElementById('expiry-date').value = ''; // Clear expiry date field
+            document.getElementById('cvv').value = ''; // Clear CVV field
+
+            // Optionally, refresh the page (uncomment the next line)
+            // location.reload();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
